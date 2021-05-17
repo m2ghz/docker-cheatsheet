@@ -1,0 +1,29 @@
+docker image pull nginx:1.20.0
+docker inspect nginx:1.20.0 | jq .[0].DockerVersion
+docker inspect nginx:1.20.0 | jq .[0].Config.ExposedPorts
+
+docker save -o nginx.tar.gz nginx:1.20.0
+docker rmi nginx:1.20.0
+docker load -i nginx.tar.gz 
+docker tag nginx:1.20.0 nginx:v1.20.0-test
+
+docker run -d -p 8081:80 nginx:v1.20.0-test
+
+ps aux | grep docker
+
+docker image prune
+
+docker run -dit alpine /bin/sh -name alp
+docker exec -it  alp /bin/sh
+apk add nginx
+docker commit alp alnginx:latest
+
+docker run --name red -d redis
+docker exec red hostname > myredis.cid
+
+docker run -d --memory 512M --memory-swap 768M --cpu-period 100000 --cpu-quota 50000 --cpuset-cpus 0 nginx
+
+docker run --name alpp -dit -e CLASS-=dws -e NAME=matthew alpine:latest /bin/sh
+docker exec alpp env
+
+docker run --name diralp -dit -v /home/ubuntu/:/data -w /data alpine
